@@ -31,8 +31,6 @@ public class MainActivity extends Activity
         findViewById(R.id.startServiceButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent2 = new Intent(getApplication(), ServiceTimer.class);
-                startService(intent2);
                 Intent intent = new Intent(getApplication(), SensingService.class);
                 startService(intent);
             }
@@ -41,8 +39,6 @@ public class MainActivity extends Activity
         findViewById(R.id.stopServiceButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent2 = new Intent(getApplication(), ServiceTimer.class);
-                stopService(intent2);
                 // Serviceの停止
                 Intent intent = new Intent(getApplication(), SensingService.class);
                 stopService(intent);
