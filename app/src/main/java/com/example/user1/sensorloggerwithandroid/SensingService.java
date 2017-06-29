@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -77,30 +78,36 @@ public class SensingService extends Service implements SensorEventListener,
 
         @Override
         public String toString(){
-            String ret = latitude + " "+ longitude +" "+ gpsSpeed;
+            DecimalFormat format = new DecimalFormat("#.#");
+            // 小数点以下の最小値
+            format.setMinimumFractionDigits(1);
+            // 小数点以下の最大値
+            format.setMaximumFractionDigits(7);
+
+            String ret = format.format(latitude) + " "+ format.format(longitude) +" "+ format.format(gpsSpeed);
             for(int i=0; i<3; i++) {
                 ret += " ";
-                ret += acceleration[i];
+                ret += format.format(acceleration[i]);
             }
             for(int i=0; i<3; i++) {
                 ret += " ";
-                ret += linearAcceleration[i];
+                ret += format.format(linearAcceleration[i]);
             }
             for(int i=0; i<3; i++) {
                 ret += " ";
-                ret += gyroscope[i];
+                ret += format.format(gyroscope[i]);
             }
             for(int i=0; i<3; i++) {
                 ret += " ";
-                ret += magneticField[i];
+                ret += format.format(magneticField[i]);
             }
             for(int i=0; i<3; i++) {
                 ret += " ";
-                ret += sensorVelocity[i];
+                ret += format.format(sensorVelocity[i]);
             }
             for(int i=0; i<3; i++) {
                 ret += " ";
-                ret += sensorRotateVelocity[i];
+                ret += format.format(sensorRotateVelocity[i]);
             }
             return ret;
         }
@@ -343,7 +350,7 @@ public class SensingService extends Service implements SensorEventListener,
         if(interval < savaInterval) return;
         lastSaveTime = now;
 
-        double  duration = (now - loggingStartedTime)/1000;
+        double  duration = (double)(now - loggingStartedTime)/1000.0;
         writer.append(duration +" "+ reportDataSet.toString() + "\n");
     }
 }
