@@ -294,6 +294,7 @@ public class SensingService extends Service implements SensorEventListener,
             }
         }
 
+        saveReportDataSet();
     }
 
     @Override
@@ -308,6 +309,7 @@ public class SensingService extends Service implements SensorEventListener,
         reportDataSet.gpsSpeed = location.getSpeed();
         reportDataSet.latitude = location.getLatitude();
         reportDataSet.longitude = location.getLongitude();
+        saveReportDataSet();
     }
 
     @Override
