@@ -114,7 +114,10 @@ public class SensingService extends Service implements SensorEventListener,
 
     @Override
     public void onDestroy() {
+        Log.d("SensingService", "STOPPED!");
         writer.close();
+        FileTransferWithHttp fth = new FileTransferWithHttp(getApplicationContext());
+        fth.execute("data/data/com.example.user1.sensorloggerwithandroid/files/" + fileName);
         super.onDestroy();
     }
 
@@ -143,7 +146,7 @@ public class SensingService extends Service implements SensorEventListener,
     private ReportDataSet reportDataSet = new ReportDataSet();
     FileOutputStream fileOutputstream = null;
     PrintWriter writer = null;
-
+    String fileName = "";
     @Override
     public void onCreate()  {
         Log.d("SensingService", "STARTSERVICE!");
@@ -165,9 +168,9 @@ public class SensingService extends Service implements SensorEventListener,
         //ファイルオープン
         final DateFormat df = new SimpleDateFormat("yyyyMMdd-HHmmss");
         final Date date = new Date(System.currentTimeMillis());
-
+        fileName = "senslog" + df.format(date)+".txt";
         try {
-            fileOutputstream = openFileOutput("senslog" + df.format(date)+".txt", Context.MODE_PRIVATE);
+            fileOutputstream = openFileOutput(fileName, Context.MODE_PRIVATE);
             writer = new PrintWriter(fileOutputstream);
         } catch (IOException e) {
             e.printStackTrace();

@@ -42,16 +42,13 @@ public class FileTransferWithHttp extends AsyncTask<String, Integer, Integer> {
             FileBody fileBody = new FileBody(file);
             multipartEntity.addPart("f1", fileBody);
             httpPost.setEntity(multipartEntity);
-            httpClient.execute(httpPost, responseHandler); }
+            httpClient.execute(httpPost, responseHandler);
+        }
         catch (ClientProtocolException e) { e.printStackTrace(); }
         catch (IOException e) { e.printStackTrace(); } return 0; }
 
-    @Override protected void onPostExecute(Integer result) { if(dialog != null){ dialog.dismiss(); } }
+    @Override protected void onPostExecute(Integer result) {}
     @Override protected void onPreExecute() {
-        dialog = new ProgressDialog(context);
-        dialog.setTitle("Please wait");
-        dialog.setMessage("Uploading...");
-        dialog.show();
     }
 
 }
